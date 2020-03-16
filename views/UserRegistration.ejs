@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Scan QR From gate
+	</title>
+	<style type="text/css">
+		p
+		{
+			color: red
+		}
+	</style>
+</head>
+<body>
+	<h1> <%= title %> </h1>
+	<form method="POST" action="/users/addUser">
+		userId : <input type="number" name="userId" required><br><br>
+		<% if(errors) { if(errors.userId) { %>
+			<p><%= errors.userId.msg %> </p>
+	    <%  }} %>
+
+		userEmailId : <input type="email" name="userEmailId" required><br><br>
+		<% if(errors) { if(errors.userEmailId) { %>
+			<p><%= errors.userEmailId.msg %> </p>
+	    <%  }} %>
+
+		first name : <input type="text" name="fName" required><br><br>
+		<% if(errors) { if(errors.fName) { %>
+			<p><%= errors.fName.msg %> </p>
+	    <%  }} %>
+
+		last name : <input type="text" name="lName" required><br><br>
+		<% if(errors) { if(errors.lName) { %>
+			<p><%= errors.lName.msg %> </p>
+	    <%  }} %>
+
+		userType: <select name="userTypeId" required>
+			<% for(let usertype of userTypes) { %>
+				<option value="<%= usertype._id %>"><%= usertype.userTypeName  %>
+				</option>
+			<% } %>
+		</select><br><br>
+		<% if(errors) { if(errors.userTypeId) { %>
+			<p color=red><%= errors.userTypeId.msg %> </p>
+	    <%  }} %>
+
+		courseName: <select name="courseName" required>
+			<option value="B.tech" >B.tech</option>
+			<option value="M.ScIT" >M.ScIT</option>
+			<option value="M.Tech" >M.Tech</option>
+			<option value="M.Des" >M.Des</option>
+		</select><br><br>
+		<% if(errors) { if(errors.courseName) { %>
+			<p><%= errors.courseName.msg %> </p>
+	    <%  }} %>
+
+		batchYear : <input type="number" name="batchYear" required><br><br>
+		<% if(errors) { if(errors.batchYear) { %>
+			<p><%= errors.batchYear.msg %> </p>
+	    <%  }} %>
+
+		password : <input type="password" name="password" required><br><br>
+		<% if(errors) { if(errors.password) { %>
+			<p ><%= errors.password.msg %> </p>
+	    <%  }} %>
+
+		re-type-password : <input type="password" name="passwordAgain" required>
+		<br><br>
+		<% if(errors) { if(errors.passwordAgain) { %>
+			<p><%= errors.passwordAgain.msg %> </p>
+	    <%  }} %>
+
+		<button type="Submit" value="Submit">Submit</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,75 @@
+-> PACKAGE ( Folder name )
+-> for MVC Design Pattern
+
+	project
+	com
+	vo
+	dao
+	controller
+
+->FILE NAME
+
+	LibraryController
+	LibraryDAO
+	LibraryVO
+
+->URL PATTERN(must be unique for each app.route())
+	app.route('loadCategory')
+	app.route('insertCategory')
+	app.route('viewCategory')
+	app.route('deleteCategory')
+	app.route('editCategory')
+	app.route('updateCategory')
+	
+********function name for each app.route() should be same as url pattern*********
+	
+->CLASS NAME
+	
+	CategoryDAO
+	CategoryVO
+
+->OBJECT NAME
+	
+	categoryDAO
+	categoryVO
+	categoryDict
+
+->VARIABLE NAME(VO Member Variables & Controller Variables)
+
+	categoryId
+	categoryName
+	categoryDescription	
+	
+->DAO CLASS METHOD NAME
+
+	insertCategory()
+	searchCategory()
+	deleteCategory()
+	editCategory()
+
+->TEXTBOX NAME
+
+	categoryId
+	categoryName
+	categoryDescription
+
+->HTML PAGE NAME
+
+	addCategory.html
+	viewCategory.html
+	editCategory.html
+	
+->TABLE NAME OF DATABASE
+
+	CategoryMaster
+	
+->COLUMN NAME OF TABLE
+
+	categoryId
+	categoryName
+	categoryDescription
+	
+->FOREIGN KEY COLUMN NAME(for subcategorymaster table) 
+
+	subcategory_CategoryId
+	

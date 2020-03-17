@@ -7,6 +7,16 @@
 </head>
 <body>
 	<h1> <%= title %> </h1>
-	<%= users %>
+	<% for(user of users) { %>
+		<h2><%= user._id %></h2>
+		<p><%= user.userTypeId %>
+		<p><%= user.userEmailId %>
+		<p><%= user.fName %>
+		<p><%= user.lName %>
+		<p><%= user.courseName %>
+		<p><%= user.batchYear %>
+		<p><%= user.password %>
+		<br>
+	<% } %>
 </body>
 </html>

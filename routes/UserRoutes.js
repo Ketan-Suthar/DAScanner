@@ -31,13 +31,6 @@ userRouter.get("/loadAddUser", (request, response, next) =>
 	});
 });
 
-userRouter.get("/loadAddUserType", (request, response, next) =>
-{
-	response.render("AddUserType",
-	{
-		title: "Add User Type",
-	});
-});
 
 userRouter.post("/addUser", (request, response, next) =>
 {
@@ -93,25 +86,6 @@ userRouter.post("/addUser", (request, response, next) =>
 });
 
 
-userRouter.post("/addUserType", (request, response, next) =>
-{
-	let userType = new UserTypes();
-	userType._id = request.body.id;
-	userType.userTypeName = request.body.userTypeName;
-
-	userType.save((err)=>
-	{
-		if(err)
-		{
-			console.log(err);
-		}
-		else
-		{
-			response.redirect("/users/loadAddUser");
-		}
-	});
-});
-
 userRouter.get("/loadAllUsers", (request, response, next) =>
 {
 	User.find({}, (error, users)=>
@@ -130,6 +104,22 @@ userRouter.get("/loadAllUsers", (request, response, next) =>
 				errors: null
 			});
 		}
+	});
+});
+
+userRouter.delete("/:userId", (request, response, next)=>
+{
+	const userId = request.params.userId;
+	User.deleteOne({_id: userId})
+	.exec()
+	.then((result)=>
+	{
+		response.redirect("/users/loadAllUsers");
+	})
+	.catch((err)=>
+	{
+		console.log(err);
+		response.redirect("/users/loadAllUsers");
 	});
 });
 

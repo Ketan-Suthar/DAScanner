@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-let userSchema = mongoose.Schema(
+let userSchema = new mongoose.Schema(
 {
 	_id:
 	{

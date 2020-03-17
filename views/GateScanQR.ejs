@@ -7,8 +7,15 @@
 </head>
 <body>
 	<h1> <%= title %> </h1>
-	<form>
+	<% if (messages) { %>
+		<% if(messages.length > 0) { %> 
+		    <h3><%= messages %></h3>
+		<% } %>
+	<% } %>
+	<form method="POST" action="/gate/CheckQR">
 		studentId : <input type="number" name="studentId">
+		visitors : <input type="number" name="noOfVisitors" min="0" value="0">
+		<button name="Submit" value="Submit">Submit</button>
 	</form>
 </body>
 </html>

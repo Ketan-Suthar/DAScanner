@@ -73,18 +73,24 @@
 
 <script src="https://rawgit.com/MrRio/jsPDF/master/dist/jspdf.debug.js"></script>
 <script src="https://rawgit.com/someatoms/jsPDF-AutoTable/master/dist/jspdf.plugin.autotable.js"></script>
-
+<!-- <script src = "../node_modules/clientside-require/dist/bundle.js"></script> -->
 <script>
+	//const path = load('path');
+
   document.getElementById('pdf').onclick = function() {
   	var startDate = document.getElementById("startDate").innerHTML;
   	var endDate = document.getElementById("endDate").innerHTML;
+
+ //  	var img = new Image(100, 200);
+	// img.src = path.resolve("Images/DA_logo.jpg");
+
 	  var doc = new jsPDF('p', 'pt');
 	  var res = doc.autoTableHtmlToJson(document.getElementById('table'));
 	  var height = doc.internal.pageSize.height;
 	  doc.text("DA GATE ENTRY/EXIT RECORDS FROM "+ startDate + " TO " + endDate, 50, 50);
-	  doc.autoTable(res.columns, res.data, {
-	    startY: 200
-	  });
+	  // doc.autoTable(res.columns, res.data, {
+	  //   startY: 200
+	  // });
 	  // doc.autoTable(res.columns, res.data, {
 	  //   startY: doc.autoTableEndPosY() + 50
 	  // });
@@ -96,6 +102,7 @@
 	    }
 	  });
 	  doc.save("DA Gate Entry/Exir Records FROM "+ startDate + " TO " + endDate);
+
 	};
 </script>
 

@@ -133,15 +133,67 @@ gateRouter.get("/loadGenerateReport",(request, response)=>
 	});
 });
 
-gateRouter.post("/generateReport.pdf",(request, response)=>
+gateRouter.get("/loadGenerateReport",(request, response)=>
 {
-	
-	var pdf = require('./CreateReportPdf').create(
-		request.body.startDate, request.body.endDate
-		);
-   	pdf.pipe(response);
-   	pdf.end();
-    
+	response.render("GenerateReportForm",
+	{
+		title: "Generate Report from gate reocrds",
+		messages: null
+	});
+});
+
+gateRouter.post("/generateReport",(request, response)=>
+{
+	//let startDate = request.body.startDate;
+	const startDate = date.format(new Date(request.body.startDate), 'DD-MM-YYYY');
+	const endDate = date.format(new Date(request.body.endDate), 'DD-MM-YYYY');
+	//const endDate = request.body.endDate;
+
+	GateRecords.aggregate(([
+		{
+			"$lookup":
+			{
+				"from": "users",
+				"localField": "userId",
+				"foreignField": "_id",
+				"as": "gaterecords"
+			}
+		},
+		{
+			"$unwind": "$gaterecords"
+		},
+		{
+			"$project":
+			{
+				"gaterecords.password": 0
+			}
+		},
+		{
+			"$match":
+			{
+				"$and":
+				[
+					{"outDate": {"$gte": startDate}}, 
+					{"inDate": {"$lte": endDate}},
+				]
+			}
+		}
+	]), (err, result)=>
+	{
+		if(err)
+		{
+			console.log("error while getting records for Report");
+			console.log(err);
+		}
+		console.log(startDate, endDate);
+		response.render("DisplayReport",
+		{
+			title: "Generated Report From Gate Reocrds",
+			messages: result,
+			startDate: startDate,
+			endDate: endDate
+		});
+	});
 });
 
 

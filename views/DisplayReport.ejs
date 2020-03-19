@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Scan QR From gate
+	</title>
+	<style type="text/css">
+		table, th, td
+		{
+			border: 1px solid black;
+		}
+		b
+		{
+			color: red
+		}
+	</style>
+</head>
+<body>
+	<h1> <%= title %> </h1>
+	<button id="pdf">Generate PDF</button>
+	<br><br>
+	FROM  <b id="startDate"> <%= startDate %> </b> 
+	TO  <b id="endDate"> <%= endDate %> </b> <br><br>
+	<table style="width:100%" id="table">
+		
+	  <tr border="1">
+	    <th>StudentId</th>
+	    <th>CourseName</th>
+	    <th>InDate</th>
+	    <th>OutDate</th>
+	    <th>InTime</th>
+	    <th>OutTime</th>
+	    <th>NoOfVisitors</th>
+	  </tr>
+		<% if (messages) { %>
+			<% if(messages.length > 0) { %>
+				<% for(mes of messages) { %>
+					<tr>
+						<td> <%= mes.userId %> </td>
+						<td> <%= mes.gaterecords.courseName %> </td>
+						<td> <%= mes.inDate %> </td>
+						<td> <%= mes.outDate %> </td>
+						<td> <%= mes.inTime %> </td>
+						<td> <%= mes.outTime %> </td>
+						<td> <%= mes.noOfVisitors %> </td>
+					</tr>
+				<% } %>
+			<% } %>
+		<% } %>
+	</table>
+	
+	<script type="text/javascript">
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		 if(dd<10){
+		        dd='0'+dd
+		    } 
+		    if(mm<10){
+		        mm='0'+mm
+		    } 
+
+		today = yyyy+'-'+mm+'-'+dd;
+		document.getElementById("endDate").setAttribute("max", today);
+		document.getElementById("endDate").setAttribute("value", today);
+		document.getElementById("startDate").setAttribute("max", today);
+		document.getElementById("startDate").setAttribute("value", today);
+	</script>
+	<table id="my-table">
+  <!-- ... -->
+</table>
+
+<script src="https://rawgit.com/MrRio/jsPDF/master/dist/jspdf.debug.js"></script>
+<script src="https://rawgit.com/someatoms/jsPDF-AutoTable/master/dist/jspdf.plugin.autotable.js"></script>
+
+<script>
+  document.getElementById('pdf').onclick = function() {
+  	var startDate = document.getElementById("startDate").innerHTML;
+  	var endDate = document.getElementById("endDate").innerHTML;
+	  var doc = new jsPDF('p', 'pt');
+	  var res = doc.autoTableHtmlToJson(document.getElementById('table'));
+	  var height = doc.internal.pageSize.height;
+	  doc.text("DA GATE ENTRY/EXIT RECORDS FROM "+ startDate + " TO " + endDate, 50, 50);
+	  doc.autoTable(res.columns, res.data, {
+	    startY: 200
+	  });
+	  // doc.autoTable(res.columns, res.data, {
+	  //   startY: doc.autoTableEndPosY() + 50
+	  // });
+	  doc.autoTable(res.columns, res.data, {
+	    startY: height,
+	    afterPageContent: function(data) {
+	      doc.setFontSize(20)
+	      doc.text("DAIICT - GATE RECORDS", 50, height - data.settings.margin.bottom - 20);
+	    }
+	  });
+	  doc.save("DA Gate Entry/Exir Records FROM "+ startDate + " TO " + endDate);
+	};
+</script>
+
+</body>
+</html>

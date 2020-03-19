@@ -26,6 +26,8 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
+    "jspdf": "^1.5.3",
+    "jspdf-autotable": "^3.2.15",
     "mongoose": "^5.9.4",
     "nodemon": "^2.0.2",
     "pdfkit": "^0.11.0",

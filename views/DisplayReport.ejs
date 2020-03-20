@@ -60,34 +60,36 @@
 <script>
 	//const path = load('path');
 
-  document.getElementById('pdf').onclick = function() {
-  	var startDate = document.getElementById("startDate").innerHTML;
-  	var endDate = document.getElementById("endDate").innerHTML;
+	document.getElementById('pdf').onclick = function()
+	{
+		var startDate = document.getElementById("startDate").innerHTML;
+		var endDate = document.getElementById("endDate").innerHTML;
 
-  	var img = new Image(50, 50);
-	img.src = "/static/Images/DA_logo.png";
+		var img = new Image(50, 50);
+		img.src = "/static/Images/DA_logo.png";
 
-	  var doc = new jsPDF('p', 'pt');
-	  var res = doc.autoTableHtmlToJson(document.getElementById('table'));
-	  var height = doc.internal.pageSize.height;
-	  doc.text("DAIICT GATE ENTRY/EXIT RECORDS FROM "+ startDate + " TO " + endDate, 20, 50);
-	  // doc.autoTable(res.columns, res.data, {
-	  //   startY: 200
-	  // });
-	  // doc.autoTable(res.columns, res.data, {
-	  //   startY: doc.autoTableEndPosY() + 50
-	  // });
-	  doc.addImage(img, 'PNG', 180, 200);
+		var doc = new jsPDF('p', 'pt');
+		var res = doc.autoTableHtmlToJson(document.getElementById('table'));
+		var height = doc.internal.pageSize.height;
+		doc.text("DAIICT GATE ENTRY/EXIT RECORDS FROM "+ startDate + " TO " + endDate, 20, 50);
+		// doc.autoTable(res.columns, res.data, {
+		//   startY: 200
+		// });
+		// doc.autoTable(res.columns, res.data, {
+		//   startY: doc.autoTableEndPosY() + 50
+		// });
+		doc.addImage(img, 'PNG', 180, 200);
 
-	  doc.autoTable(res.columns, res.data, {
-	    startY: height,
-	    afterPageContent: function(data) {
-	      doc.setFontSize(20)
-	      doc.text("DAIICT - GATE RECORDS", 50, height - data.settings.margin.bottom + 10);
-	    }
-	  });
-	  doc.save("DA Gate Entry/Exir Records FROM "+ startDate + " TO " + endDate);
-
+		doc.autoTable(res.columns, res.data,
+		{
+			startY: height,
+			afterPageContent: function(data)
+			{
+				doc.setFontSize(20)
+				doc.text("DAIICT - GATE RECORDS", 50, height - data.settings.margin.bottom + 10);
+			}
+		});
+		doc.save("DA Gate Entry/Exir Records FROM "+ startDate + " TO " + endDate);
 	};
 </script>
 

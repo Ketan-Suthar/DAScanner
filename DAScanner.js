@@ -41,6 +41,12 @@ app.set("views", path.join(__dirname, "views"));
 // set view engine - EJS
 app.set("view engine", "ejs");
 
+// set static file to /static/views route
+// so all files in views will be static now
+app.use('/static/', express.static(path.join(__dirname, "views")));
+
+
+
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 

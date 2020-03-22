@@ -1,4 +1,5 @@
 const express = require("express");
+
 const User = require("../models/User");
 const GateRecords = require("../models/GateRecords");
 const TempGateRecords = require("../models/TempGateRecords");
@@ -12,7 +13,7 @@ gateRouter.get("/loadGateScanner",(request, response, next) =>
 	response.render("GateScanQR",
 	{
 		title: "DA Gate Entry/Exit System",
-		messages: null
+		expressFlash: request.flash("success")
 	});
 });
 
@@ -80,12 +81,8 @@ gateRouter.post("/CheckQR",(request, response, next) =>
 						console.log("per. record inserted");
 						console.log(result);
 
-						
-						return response.render("GateScanQR",
-						{
-							title: "DA Gate Entry/Exit System",
-							messages: "Per. Entry recorded successfully"
-						});
+						request.flash("success", "Per. Entry recorded successfully");
+						return response.redirect("/gate/loadGateScanner");
 					})
 					.catch(err=>
 					{
@@ -111,11 +108,8 @@ gateRouter.post("/CheckQR",(request, response, next) =>
 					console.log("Temp recorded");
 					console.log(result);
 
-					return response.render("GateScanQR",
-					{
-						title: "DA Gate Entry/Exit System",
-						messages: "Temp. In Entry recorded successfully"
-					});
+					request.flash("success", "Temp. In Entry recorded successfully");
+					return response.redirect("/gate/loadGateScanner");
 				})
 				.catch(err=>
 				{
@@ -126,11 +120,7 @@ gateRouter.post("/CheckQR",(request, response, next) =>
 		else
 		{
 			request.flash("success", "studentId is not valid");
-			response.render("GateScanQR",
-			{
-				title: "DA Gate Entry/Exit System",
-				messages: "Submission Failed"
-			});
+			return response.redirect("/gate/loadGateScanner");
 		}
 	});
 });
@@ -148,39 +138,46 @@ gateRouter.get("/loadGenerateReport",(request, response)=>
 gateRouter.post("/generateReport",(request, response)=>
 {
 	//let startDate = request.body.startDate;
-	const startDate = date.format(new Date(request.body.startDate), 'DD-MM-YYYY');
-	const endDate = date.format(new Date(request.body.endDate), 'DD-MM-YYYY');
+	let startDate = date.format(new Date(request.body.startDate), 'DD-MM-YYYY');
+	let endDate = date.format(new Date(request.body.endDate), 'DD-MM-YYYY');
 	//const endDate = request.body.endDate;
 
+	if(startDate > endDate)
+	{
+		let tempDate = startDate;
+		startDate = endDate;
+		endDate = tempDate;
+	}
+
 	GateRecords.aggregate(([
+	{
+		"$lookup":
 		{
-			"$lookup":
-			{
-				"from": "users",
-				"localField": "userId",
-				"foreignField": "_id",
-				"as": "gaterecords"
-			}
-		},
-		{
-			"$unwind": "$gaterecords"
-		},
-		{
-			"$project":
-			{
-				"gaterecords.password": 0
-			}
-		},
-		{
-			"$match":
-			{
-				"$and":
-				[
-					{"outDate": {"$gte": startDate}}, 
-					{"inDate": {"$lte": endDate}},
-				]
-			}
+			"from": "users",
+			"localField": "userId",
+			"foreignField": "_id",
+			"as": "gaterecords"
 		}
+	},
+	{
+		"$unwind": "$gaterecords"
+	},
+	{
+		"$project":
+		{
+			"gaterecords.password": 0
+		}
+	},
+	{
+		"$match":
+		{
+			"$and":
+			[
+				{"outDate": {"$lte": endDate}}, 
+				{"inDate": {"$gte": startDate}},
+			]
+		}
+	}
 	]), (err, result)=>
 	{
 		if(err)
@@ -189,7 +186,7 @@ gateRouter.post("/generateReport",(request, response)=>
 			console.log(err);
 		}
 		console.log(startDate, endDate);
-		if(result)
+		if(result.length !== 0)
 		{
 			response.render("DisplayReport",
 			{

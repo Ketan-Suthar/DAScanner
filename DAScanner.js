@@ -50,13 +50,24 @@ app.use('/static/', express.static(path.join(__dirname, "views")));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
-//set session Middleware
+var sessionStore = new session.MemoryStore;
+
 app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-  //cookie: { secure: true }
+    cookie: { maxAge: 60000 },
+    store: sessionStore,
+    saveUninitialized: true,
+    resave: 'true',
+    secret: 'secret'
 }));
+app.use(flash());
+
+// Custom flash middleware -- from Ethan Brown's book, 'Web Development with Node & Express'
+app.use(function(req, res, next){
+    // if there's a flash message in the session request, make it available in the response, then delete it
+    res.locals.sessionFlash = req.session.sessionFlash;
+    delete req.session.sessionFlash;
+    next();
+});
 
 // set home route
 // simple get request by user
@@ -66,13 +77,6 @@ app.get("/", (request, response) =>
 	{
 		title: "Helloo, Welcome to DAScanner."
 	});
-});
-
-//express messages Middleware
-app.use(require('connect-flash')());
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
 });
 
 // set /gate routes gateRoutes

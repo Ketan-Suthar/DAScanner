@@ -21,33 +21,37 @@
 	<br><br>
 	FROM  <b id="startDate"> <%= startDate %> </b> 
 	TO  <b id="endDate"> <%= endDate %> </b> <br><br>
-	<table style="width:100%" id="table">
-		
-	  <tr border="1">
-	    <th>StudentId</th>
-	    <th>CourseName</th>
-	    <th>InDate</th>
-	    <th>InTime</th>
-	    <th>OutDate</th>
-	    <th>OutTime</th>
-	    <th>VisitorsWithStudent</th>
-	  </tr>
-		<% if (messages) { %>
-			<% if(messages.length > 0) { %>
-				<% for(mes of messages) { %>
-					<tr>
-						<td> <%= mes.userId %> </td>
-						<td> <%= mes.gaterecords.courseName %> </td>
-						<td> <%= mes.inDate %> </td>
-						<td> <%= mes.inTime %> </td>
-						<td> <%= mes.outDate %> </td>
-						<td> <%= mes.outTime %> </td>
-						<td> <%= mes.noOfVisitors %> </td>
-					</tr>
+
+	<% if (messages === "No Data Found") { %>
+		<h3>NO DATA FOUND</h3>
+	<% } else { %>
+		<table style="width:100%" id="table">
+		  <tr border="1">
+		    <th>StudentId</th>
+		    <th>CourseName</th>
+		    <th>InDate</th>
+		    <th>InTime</th>
+		    <th>OutDate</th>
+		    <th>OutTime</th>
+		    <th>VisitorsWithStudent</th>
+		  </tr>
+			<% if (messages) { %>
+				<% if(messages.length > 0) { %>
+						<% for(mes of messages) { %>
+							<tr>
+								<td> <%= mes.userId %> </td>
+								<td> <%= mes.gaterecords.courseName %> </td>
+								<td> <%= mes.inDate %> </td>
+								<td> <%= mes.inTime %> </td>
+								<td> <%= mes.outDate %> </td>
+								<td> <%= mes.outTime %> </td>
+								<td> <%= mes.noOfVisitors %> </td>
+							</tr>
+						<% } %>
 				<% } %>
 			<% } %>
-		<% } %>
-	</table>
+		</table>
+	<% } %>	
 	<!-- <img src="/static/Images/DA_logo.png" > -->
 <% var rootPath = '../'; %>
 
@@ -55,10 +59,7 @@
 <script src="https://rawgit.com/MrRio/jsPDF/master/dist/jspdf.debug.js"></script>
 <script src="https://rawgit.com/someatoms/jsPDF-AutoTable/master/dist/jspdf.plugin.autotable.js"></script>
 
-
-<!-- <script src =" <%- (rootPath + 'node_modules/clientside-require/dist/bundle.js'); %>"></script> -->
 <script>
-	//const path = load('path');
 
 	document.getElementById('pdf').onclick = function()
 	{

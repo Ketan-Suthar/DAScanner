@@ -17,18 +17,44 @@ gateRouter.get("/loadGateScanner",(request, response, next) =>
 	});
 });
 
-gateRouter.post("/CheckQR",(request, response, next) =>
+gateRouter.post("/checkQR",(request, response, next) =>
 {
 	const userId = request.body.studentId;
-	User.findById(userId,(err, user)=>
+	console.log(request.body.mes);
+	User.findById(userId,{password:0},(err, user)=>
 	{
 		if(err)
 		{
 			console.log("error while fetching user in CheckQR: ");
 			console.log(err);
+			return response.send("ERROR");
 		}
 		console.log(userId);
 		//console.log(user);
+		if(user)
+		{
+			response.send(user);
+		}
+		else
+		{
+			response.send("INVALID");
+		}
+	});
+});
+
+gateRouter.post("/insertRecord",(request, response, next) =>
+{
+	console.log("inside insertRecord");
+	let userId = request.body.studentId;
+	User.findById(userId,{password:0},(err, user)=>
+	{
+		if(err)
+		{
+			console.log("error while fetching user in CheckQR: ");
+			console.log(err);
+			return response.send("ERROR");
+		}
+		
 		if(user)
 		{
 			console.log(user._id);
@@ -36,7 +62,8 @@ gateRouter.post("/CheckQR",(request, response, next) =>
 			const now = new Date();
 			let currDate = date.format(now, 'DD-MM-YYYY');
 			let currTime = date.format(now, 'HH:mm:ss');
-
+			console.log(request.body.out);
+			console.log(request.body.in);
 			if(request.body.out)
 			{
 				console.log(request.body.out);
@@ -82,11 +109,12 @@ gateRouter.post("/CheckQR",(request, response, next) =>
 						console.log(result);
 
 						request.flash("success", "Per. Entry recorded successfully");
-						return response.redirect("/gate/loadGateScanner");
+						response.send("success");
 					})
 					.catch(err=>
 					{
 						console.log(err);
+						response.send("ERROR");
 					});
 					
 				});
@@ -109,22 +137,21 @@ gateRouter.post("/CheckQR",(request, response, next) =>
 					console.log(result);
 
 					request.flash("success", "Temp. In Entry recorded successfully");
-					return response.redirect("/gate/loadGateScanner");
+					response.send("success");
 				})
 				.catch(err=>
 				{
 					console.log(err);
+					response.send("ERROR");
 				});
 			}
 		}
 		else
 		{
-			request.flash("success", "studentId is not valid");
-			return response.redirect("/gate/loadGateScanner");
+			response.send("INVALID");
 		}
-	});
+	});	
 });
-
 gateRouter.get("/loadGenerateReport",(request, response)=>
 {
 	response.render("GenerateReportForm",
@@ -173,8 +200,9 @@ gateRouter.post("/generateReport",(request, response)=>
 		{
 			"$and":
 			[
-				{"outDate": {"$lte": endDate}}, 
-				{"inDate": {"$gte": startDate}},
+				{"$or":[{"outDate": {"$lte": endDate}},
+						{"outDate":{"$eq": ""}}]},
+				{"$or":[{"inDate": {"$gte": startDate}}]},
 			]
 		}
 	}
@@ -186,6 +214,7 @@ gateRouter.post("/generateReport",(request, response)=>
 			console.log(err);
 		}
 		console.log(startDate, endDate);
+
 		if(result.length !== 0)
 		{
 			response.render("DisplayReport",

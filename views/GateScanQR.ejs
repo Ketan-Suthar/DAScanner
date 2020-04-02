@@ -64,7 +64,7 @@
     #result
     {
       width: 80%;
-      height: 200px;
+      height: 100px;
       border: 0.5px dashed;
     }
     #btnout
@@ -107,11 +107,8 @@
   <main class="wrapper" style="padding-top:2em">
 
     <section class="container" id="demo-content">
-      <h1 class="title">Scan QR Code from Video Camera</h1>
+      <h2 class="title">Scan QR Code from Video Camera</h2>
 
-      <p>
-        <a class="button-small button-outline" href="/">HOME 🏡</a>
-      </p>
 
       <div id="buttonDiv">
         <a><button class="button" id="startButton"> Start </button> </a>
@@ -123,7 +120,10 @@
       </div>
 
       <label>OR Enter Manually:</label>
+      StudentId:
       <pre><input type="text" name="studentId" id="studentId"></pre>
+      Visitors
+      <pre><input type="number" name="noOfVisitors" id="noOfVisitors"></pre>
 
       <label>Student Details:</label>
       <div id="result">
@@ -204,11 +204,14 @@
     $("#btnIn").click(()=>
     {
       var id = document.getElementById("studentId").value;
+      var noOfVisitors = document.getElementById("noOfVisitors").value;
+      
       console.log(id);
       
       $.post('/gate/insertRecord',
       {
         studentId: id,
+        noOfVisitors: noOfVisitors,
         in: true
       },
       (data, status)=>
@@ -223,6 +226,8 @@
             RECORD INSERTED<b></span>");
 
           document.getElementById("studentId").value = "";
+          document.getElementById("noOfVisitors").value = "";
+
           $('#btnIn').prop('disabled', true);
           $('#btnOut').prop('disabled', true);
         }
@@ -251,6 +256,8 @@
             RECORD INSERTED<b></span>");
 
           document.getElementById("studentId").value = "";
+          document.getElementById("noOfVisitors").value = "";
+
           $('#btnIn').prop('disabled', true);
           $('#btnOut').prop('disabled', true);
         }

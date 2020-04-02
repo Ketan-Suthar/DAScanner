@@ -62,11 +62,24 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 			const now = new Date();
 			let currDate = date.format(now, 'DD-MM-YYYY');
 			let currTime = date.format(now, 'HH:mm:ss');
+
 			console.log(request.body.out);
 			console.log(request.body.in);
+
 			if(request.body.out)
 			{
 				console.log(request.body.out);
+				let gateRecord = new GateRecords();
+
+				let forgotIn = true;
+
+				gateRecord.userId = user._id;
+				gateRecord.outDate = currDate;
+				gateRecord.outTime = currTime;
+				gateRecord.inDate = currDate;
+				gateRecord.inTime = currTime;
+				gateRecord.noOfVisitors = 0;
+
 				TempGateRecords.find({userId: user._id}, (err, tempRecord)=>
 				{
 					console.log(tempRecord);
@@ -76,22 +89,15 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 						console.log("error while fetching tempRecord: ");
 						console.log(err);
 					}
-					let gateRecord = new GateRecords();
-
-					gateRecord.userId = user._id;
-					gateRecord.outDate = currDate;
-					gateRecord.outTime = currTime;
 
 					if(!(tempRecord[0] == undefined))
 					{
-						
+						forgotIn = false;
 						gateRecord.inDate = tempRecord[0].inDate;
 						gateRecord.inTime = tempRecord[0].inTime;
-
 						gateRecord.noOfVisitors = tempRecord[0].noOfVisitors;
 
-						TempGateRecords.deleteOne({userId: userId})
-						.exec()
+						TempGateRecords.deleteOne({userId: user._id})
 						.then((result)=>
 						{
 							console.log("temp record delete for "+ userId);
@@ -102,13 +108,17 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 						});
 					}
 
+					if(forgotIn)
+					{
+						console.log("two out found");
+						gateRecord.forgot = "IN";
+					}
+
 					gateRecord.save()
 					.then(result=>
 					{
 						console.log("per. record inserted");
 						console.log(result);
-
-						request.flash("success", "Per. Entry recorded successfully");
 						response.send("success");
 					})
 					.catch(err=>
@@ -116,8 +126,9 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 						console.log(err);
 						response.send("ERROR");
 					});
-					
 				});
+
+
 			}
 			else if(request.body.in)
 			{
@@ -129,6 +140,45 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 				newTempRecord.inDate = currDate;
 				newTempRecord.inTime = currTime;
 				newTempRecord.noOfVisitors = request.body.noOfVisitors;
+
+				TempGateRecords.find({userId: user._id}, (err, tempRecord)=>
+				{
+					if(!(tempRecord[0] == undefined))
+					{
+						console.log("attemp to second time IN");
+
+						let gateRecord = new GateRecords();
+
+						gateRecord.userId = user._id;
+						gateRecord.outDate = tempRecord[0].inDate;
+						gateRecord.outTime = tempRecord[0].inTime;
+						gateRecord.inDate = tempRecord[0].inDate;
+						gateRecord.inTime = tempRecord[0].inTime;
+						gateRecord.noOfVisitors = tempRecord[0].noOfVisitors;
+						gateRecord.forgot = "OUT";
+
+						gateRecord.save()
+						.then(result=>
+						{
+							console.log("Data Saved for previous IN");
+						})
+						.catch(err=>
+						{
+							console.log(err);
+						});
+
+						TempGateRecords.deleteOne({userId: user._id})
+						.exec()
+						.then((result)=>
+						{
+							console.log("one of temp record delete for "+ userId);
+						})
+						.catch((err)=>
+						{
+							console.log(err);
+						});
+					}
+				});
 
 				newTempRecord.save()
 				.then(result=>
@@ -200,9 +250,9 @@ gateRouter.post("/generateReport",(request, response)=>
 		{
 			"$and":
 			[
-				{"$or":[{"outDate": {"$lte": endDate}},
+				{"$or":[{"outDate": {"$gte": endDate}},
 						{"outDate":{"$eq": ""}}]},
-				{"$or":[{"inDate": {"$gte": startDate}}]},
+				{"$or":[{"inDate": {"$lte": startDate}}]},
 			]
 		}
 	}

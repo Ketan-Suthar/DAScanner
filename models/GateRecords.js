@@ -33,6 +33,11 @@ let gateRecordsSchema = new Schema(
 	{
 		type: Number,
 		default: 0
+	},
+	forgot:
+	{
+		type: String,
+		default: ""
 	}
 });
 

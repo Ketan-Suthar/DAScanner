@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
+    <title>Report</title>
+
+    <!-- Icons font CSS-->
+    <link href="/static/studentStatic/Report_CSS/material-design-iconic-font.css" rel="stylesheet" media="all">
+    <link href="/static/studentStatic/Report_CSS/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="/static/studentStatic/Report_CSS/select2.min.css" rel="stylesheet" media="all">
+    <link href="/static/studentStatic/Report_CSS/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="/static/studentStatic/Report_CSS/main.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-1">
+                <div>
+                    <img src="/static/studentStatic/images/course-bg-3.jpg" alt="daiict" class="image">
+                </div>
+                <div class="card-body">
+                   <h3>Generate Report Of Gate Records</h3></br>
+                    <form method="POST" action="/gate/generateReport">
+                            <div class="row row-space">
+                                    <!-- <div class="col-2">
+                                        <div class="input-group">
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select name="designation" id="designation">
+                                                    <option selected="selected">SAC</option>
+                                                    <option>Gate Keeper</option>
+                                                    <option>Library</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select id="selectBox" name="reportOption" onchange="changeFunc();">
+                                                    <option value="1">Only Date</option>
+                                                    <option value="2">Only Student ID</option>
+                                                    <option value="3">Both</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div>
+                    <div id="ReportDate">
+                        <div class="input-group">
+                                <label for="Start Date">Start Date:</label>
+                                <input type="date" id="startDate" min="01-01-2002" name="startDate" data-date-format="DD-MM-YYYY"></div>
+                        <div class="input-group">
+                                <label for="end Date">End Date:</label>
+                                <input type="date" id="endDate" name="endDate" max="03-18-2020" data-date-format="DD-MM-YYYY"></div>
+                            </div>
+                    </div>
+                    <div id="stuID" style="display:none"> 
+                        <div class="input-group" id="studID">
+                                <input type="text" id="stuID" name="studentId" placeholder="Student ID" maxlength="9" minlength="9"></div>
+                            </div>
+                        <center><button type="submit" name="reportButton" id="reportButton" onclick="return DateCheck()">Report Generate</button></center>
+                        <!-- <center><button type="button" name="backButton" id="backButton"> <a href="Home.html" style="color:white;text-decoration: none;">back</a></button></center> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+         if(dd<10){
+                dd='0'+dd
+            } 
+            if(mm<10){
+                mm='0'+mm
+            } 
+
+        today = dd+'-'+mm+'-'+yyyy;
+        document.getElementById("endDate").setAttribute("max", today);
+        document.getElementById("startDate").setAttribute("max", today);
+
+        // function DateCheck()
+        // {
+        //     let sdate = document.getElementById("startDate");
+        //     let edate = document.getElementById("endDate");
+        //     console.log(sdate + " " + edate);
+        // }
+
+    </script>
+    <script src="/static/studentStatic/Report_JS/jquery.min.js"></script>
+    <script src="/static/studentStatic/Report_JS/select2.min.js"></script>
+    <script src="/static/studentStatic/Report_JS/moment.min.js"></script>
+    <script src="/static/studentStatic/Report_JS/daterangepicker.js"></script>
+    <script src="/static/studentStatic/Report_JS/ReportValidation.js"></script>
+    <script src="/static/studentStatic/Report_JS/global.js"></script>
+</body>
+</html>

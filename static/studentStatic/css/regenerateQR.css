@@ -1,0 +1,83 @@
+h1 {
+  margin-left: auto;
+  margin-top: 50px;
+  text-align: center;
+  font-weight: 100;
+  font-size: 2.8em;
+  color: #ffffff;
+}
+error-id, error-email{
+    font-size: small;
+
+}
+container-fluid {
+    width: aut0;
+    height: auto;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}
+form{
+    align-items: center;
+    text-align: center;
+    
+}
+.formStyle { 
+
+  padding: 20px; 
+  width: 500px; 
+  height: 70px;
+  margin-bottom: 20px; 
+  border-bottom-width: 1px; 
+  border-bottom-style: solid; 
+  border-bottom-color: #ecf0f1; 
+  border-top-style: none; 
+  border-right-style: none; 
+  border-left-style: none; 
+  font-size: 0.5em;
+  font-weight: 100;
+  color: #070707;
+}
+
+.formButton {
+	background-color: #3295a8;
+	display:inline-block;
+	color:black;
+	font-size:28px;
+	font-weight: 500;
+	padding:6px 24px;
+    margin-top: 15px;
+    margin-right: 60px;
+	text-decoration:none;
+}
+
+.formButton:hover {
+	background-color: #358191;
+  color: black;
+}
+
+.formButton:active {
+	top:3px;
+}
+
+/*To remove the outline that appears on clicking the input textbox*/
+input:focus {
+  outline: none;
+}
+
+/* To format the placeholder text color */
+::-webkit-input-placeholder {
+   color: black;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #ecf0f1;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #ecf0f1;  
+}
+
+:-ms-input-placeholder {  
+   color: #ecf0f1;  
+}

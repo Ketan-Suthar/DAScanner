@@ -1,0 +1,82 @@
+html,body{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	font-family: sans-serif;
+	overflow-x: hidden;
+}
+body{
+	font-size: 10px;
+	align-self: center;
+	background-color: #eeeeee;
+	margin-bottom: -140;
+}
+.img1{
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	height: 30vh;
+	width: 100%;
+	background-color: navy;
+	overflow: hidden;
+}
+header{
+	margin-top: -12;
+	width: 100%;
+}
+form{
+	font-size: 40px; 
+	width:100vw;
+	font-family: sans-serif;
+	background-color: #eeeeee;
+	color: #7b7b7b;
+}
+.d1{
+	margin:0; 
+	width:100%;
+	height:auto;
+	align-items: center;
+}
+.h11{
+	align-content: center;
+	margin-top: 1px;
+
+}
+
+.fn1,.ln1,.gen,.bday,.pnumber1,.email1{
+	font-size: 1.75em;
+}
+.fn,.ln,.bdate,.email,.pnumber{
+	width:100%;
+	height:7vh ;
+	font-size:1.75em;
+}
+.gender{
+	width: 100%;
+	height: 3vh;
+}
+.menu1 a{
+	text-align: center;
+	height: 15vh;
+	font-size: 1.75em;
+	margin:0;
+	text-decoration: none;
+	color: white;
+	padding: 20px 20px;
+	
+}
+.menu1 a:hover{
+	text-decoration:underline;
+}
+.menu1 .menualign1{
+	text-align: center;
+	padding:20px;
+	background-color: #3295a8;
+}
+@media only screen and (max-width: 415px) {
+	.img1{
+		align-self: center;
+		width:80%;
+	}
+}

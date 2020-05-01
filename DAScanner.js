@@ -43,9 +43,7 @@ app.set("view engine", "ejs");
 
 // set static file to /static/views route
 // so all files in views will be static now
-app.use('/static/', express.static(path.join(__dirname, "views")));
-
-
+app.use("/static",express.static(path.join(__dirname, "/static")));
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
@@ -73,7 +71,7 @@ app.use(function(req, res, next){
 // simple get request by user
 app.get("/", (request, response) =>
 {
-	response.render("Index",
+	response.render("studentViews/index",
 	{
 		title: "Helloo, Welcome to DAScanner."
 	});
@@ -83,6 +81,7 @@ app.get("/", (request, response) =>
 app.use("/gate", gateRoute);
 app.use("/users", userRoute); // set /users routes
 app.use("/userTypes", userTypeRoute);
+
 // init port so server can start listening
 app.listen(3000, ()=>
 {

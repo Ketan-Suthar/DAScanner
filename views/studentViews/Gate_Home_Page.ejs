@@ -1,0 +1,78 @@
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="Gate.css"></link>
+</head>
+<body>
+<nav class="n1">
+	<div>
+		<br>
+<header><img src="course-bg-3.jpg" class="img1"/></header>
+</div>
+ <div class="menu1">
+                    <div class="menualign1"><a href="Gate_Home_Page.html" class="selected">Home</a>
+                    <a href="profile/">Profile</a>
+                    <a href="Reports/">Reports</a>
+              	    <a href="ChangePassword.html">Change Password</a>
+                    <a href="login.html">Logout</a>
+                    </div>
+                </div>
+  </nav>  
+<div class="Gate_div">
+        <br/>
+        <div class="Gate_div2">
+                <h2 class="h11">GATE HOMEPAGE</h2>
+                <button value="scanqr" name="IN" class="btn1">IN</button>
+                <br>
+                <button value="scanqr" name="OUT" class="btn1">OUT</button>
+                <br>
+                <form method="POST" onsubmit="return validate();"> 
+                        <br>
+                        <h2>
+                            Enter the ID : 
+                        </h2>
+                        <input class="qty1" name="stu_id"  id="stu_id" type="number" placeholder="Student_ID" maxlength="9" required>
+                        <br>
+                        <span id="error-ID" style="color:red;">
+                        </span>
+                        <br>
+                        <input type="submit" class="btn1" id="in" value="IN"> 
+                        <br>
+                        <input type="submit" class="btn1" id="out" value="OUT">
+                </form>
+        </div>
+        <br>
+	
+</div>
+<script>
+        function validate(){
+                var name = document.getElementById('stu_id').value;
+                var student_id,x=0;
+                var year=name.substr(0,4);
+                var cid= name.substr(4,2);
+                var flag=0;
+                submitOK = "true";
+                student_id = document.getElementById("stu_id").value;
+                x = student_id.length
+                if(x>9 || x<9){
+                    document.getElementById('error-ID').innerHTML="*ID should be of 9 digits.";
+                    submitOK = "false";
+                }
+
+                if(cid=='01' || cid=='11' || cid=='12'){
+                        flag=1;
+                }
+
+                if(year<2001||year>=2001&&flag==0){
+                        document.getElementById('error-ID').innerHTML="*ID is Invalid";
+                        submitOK = "false";
+                }
+
+                if(submitOK == "false")
+                {
+                    return false;
+                }
+    }
+</script>
+</body>
+</html>

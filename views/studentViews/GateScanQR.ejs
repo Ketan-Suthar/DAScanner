@@ -86,6 +86,10 @@
     {
       padding:10px;
     }
+    .dablue
+    {
+      background-color: #0161b6;
+    }
   </style>
   <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script> 
   
@@ -111,8 +115,8 @@
 
 
       <div id="buttonDiv">
-        <a><button class="button" id="startButton"> Start </button> </a>
-        <a> <button class="button"  id="resetButton"> Reset </button></a>
+        <a><button class="button dablue" id="startButton"> Start </button> </a>
+        <a> <button class="button dablue"  id="resetButton"> Reset </button></a>
       </div>
 
       <div>
@@ -121,17 +125,17 @@
 
       <label>OR Enter Manually:</label>
       StudentId:
-      <pre><input type="text" name="studentId" id="studentId"></pre>
+      <pre><input type="text" name="studentId" id="studentId" class="dablue"></pre>
       Visitors
-      <pre><input type="number" name="noOfVisitors" id="noOfVisitors"></pre>
+      <pre><input type="number" name="noOfVisitors" id="noOfVisitors" class="dablue"></pre>
 
       <label>Student Details:</label>
       <div id="result">
       </div>
       <br>
-      <button id="verify">Verify</button>
-      <button id="btnIn" disabled>Entry</button>
-      <button id="btnOut" disabled>Exit</button>
+      <button id="verify" class="dablue">Verify</button>
+      <button id="btnIn" class="dablue" disabled>Entry</button>
+      <button id="btnOut" class="dablue" disabled>Exit</button>
 
       <div id="sourceSelectPanel" style="display:none">
         <label for="sourceSelect">Change video source:</label>

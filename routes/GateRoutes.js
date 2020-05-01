@@ -10,7 +10,7 @@ const gateRouter = express.Router();
 
 gateRouter.get("/loadGateScanner",(request, response, next) =>
 {
-	response.render("GateScanQR",
+	response.render("studentViews/GateScanQR",
 	{
 		title: "DA Gate Entry/Exit System",
 		expressFlash: request.flash("success")
@@ -202,30 +202,58 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 		}
 	});	
 });
+
 gateRouter.get("/loadGenerateReport",(request, response)=>
 {
-	response.render("GenerateReportForm",
+	response.render("studentViews/GenerateReportForm",
 	{
 		title: "Generate Report from gate reocrds",
 		messages: null
 	});
 });
 
-
 gateRouter.post("/generateReport",(request, response)=>
 {
-	//let startDate = request.body.startDate;
-	let startDate = date.format(new Date(request.body.startDate), 'DD-MM-YYYY');
-	let endDate = date.format(new Date(request.body.endDate), 'DD-MM-YYYY');
-	//const endDate = request.body.endDate;
+	let option = request.body.reportOption;
+	console.log(option);
 
-	if(startDate > endDate)
+	let today = new Date();
+    let yyyy = today.getFullYear();
+
+    today = new Date();
+    let fdate  = new Date("2002-01-01");
+	let startDate = date.format(fdate, 'DD-MM-YYYY');
+	let endDate = date.format(today, 'DD-MM-YYYY');
+	console.log(today);
+	let startId = "200201001";
+	let endId = yyyy + "12" + "120";
+
+	if(option == 2 || option == 3)
 	{
-		let tempDate = startDate;
-		startDate = endDate;
-		endDate = tempDate;
+		startId = request.body.studentId;
+		endId = request.body.studentId;
 	}
 
+	if(option != 2)
+	{
+		let sdate  = new Date(request.body.startDate);
+		let edate  = new Date(request.body.endDate);
+
+		startDate = date.format(sdate, 'DD-MM-YYYY');
+		endDate = date.format(edate, 'DD-MM-YYYY');
+
+		if(startDate < endDate)
+		{
+			let tempDate = startDate;
+			startDate = endDate;
+			endDate = tempDate;
+		}
+	}
+
+	console.log(startDate + " "+ endDate);
+	console.log(startId + " "+ endId);
+	startId = parseInt(startId, 10);
+	endId = parseInt(endId, 10);
 	GateRecords.aggregate(([
 	{
 		"$lookup":
@@ -251,8 +279,13 @@ gateRouter.post("/generateReport",(request, response)=>
 			"$and":
 			[
 				{"$or":[{"outDate": {"$gte": endDate}},
+						//{"outDate": {"$lte": endDate}},
 						{"outDate":{"$eq": ""}}]},
-				{"$or":[{"inDate": {"$lte": startDate}}]},
+				{"$or":[{"inDate": {"$lte": startDate}},
+						//{"inDate": {"$gte": startDate}},
+						{"inDate":{"$eq": ""}}]},
+				{"userId": {"$gte": startId}},
+				{"userId": {"$lte": endId}}
 			]
 		}
 	}
@@ -264,10 +297,9 @@ gateRouter.post("/generateReport",(request, response)=>
 			console.log(err);
 		}
 		console.log(startDate, endDate);
-
 		if(result.length !== 0)
 		{
-			response.render("DisplayReport",
+			response.render("studentViews/DisplayReport",
 			{
 				title: "Generated Report From Gate Reocrds",
 				messages: result,
@@ -277,7 +309,7 @@ gateRouter.post("/generateReport",(request, response)=>
 		}
 		else
 		{
-			response.render("DisplayReport",
+			response.render("studentViews/DisplayReport",
 			{
 				title: "Generated Report From Gate Reocrds",
 				messages: "No Data Found",
@@ -286,12 +318,17 @@ gateRouter.post("/generateReport",(request, response)=>
 			});
 		}
 	});
+	
 });
 
 
 module.exports = gateRouter;
 
 /*
+let sdate = Date.parse(request.body.startDate);
+	let edate = Date.parse(request.body.endDate);
+	console.log(isNaN(sdate));
+	console.log(isNaN(edate));
 
 {
 	"$redact":

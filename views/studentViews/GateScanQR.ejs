@@ -191,7 +191,7 @@
             "Course:&emsp;" + data.courseName + "<br>" +
             "batch:&emsp;" + data.batchYear
           );
-
+          document.getElementById("studentId").value = data._id;
           $('#btnIn').prop('disabled', false);
           $('#btnOut').prop('disabled', false);
         }

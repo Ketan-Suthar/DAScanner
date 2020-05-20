@@ -1,4 +1,5 @@
 const express = require("express");
+const crypto = require('crypto');
 
 const User = require("../models/User");
 const GateRecords = require("../models/GateRecords");
@@ -19,8 +20,25 @@ gateRouter.get("/loadGateScanner",(request, response, next) =>
 
 gateRouter.post("/checkQR",(request, response, next) =>
 {
-	const userId = request.body.studentId;
+	const id = request.body.studentId;
+	var userId = id;
+	if(isNaN(id))
+	{
+		try
+		{
+			mykey = crypto.createDecipher('aes-128-cbc', 'dascanner');
+			var userId = mykey.update(id, 'hex', 'utf8')
+			userId += mykey.final('utf8');
+		}
+		catch(err)
+		{
+			console.log(err)
+			return response.send("INVALID");
+		}
+	}
+	
 	console.log(request.body.mes);
+	console.log("\nid: "+userId);
 	User.findById(userId,{password:0},(err, user)=>
 	{
 		if(err)
@@ -127,8 +145,6 @@ gateRouter.post("/insertRecord",(request, response, next) =>
 						response.send("ERROR");
 					});
 				});
-
-
 			}
 			else if(request.body.in)
 			{
@@ -221,12 +237,12 @@ gateRouter.post("/generateReport",(request, response)=>
     let yyyy = today.getFullYear();
 
     today = new Date();
-    let fdate  = new Date("2002-01-01");
+    let fdate  = new Date("2000-01-01");
 	let startDate = date.format(fdate, 'DD-MM-YYYY');
 	let endDate = date.format(today, 'DD-MM-YYYY');
 	console.log(today);
-	let startId = "200201001";
-	let endId = yyyy + "12" + "120";
+	let startId = "000000000";
+	let endId = "999999999";
 
 	if(option == 2 || option == 3)
 	{
@@ -296,6 +312,7 @@ gateRouter.post("/generateReport",(request, response)=>
 			console.log("error while getting records for Report");
 			console.log(err);
 		}
+
 		console.log(startDate, endDate);
 		if(result.length !== 0)
 		{

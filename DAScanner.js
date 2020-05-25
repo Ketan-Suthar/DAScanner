@@ -6,7 +6,7 @@ const mongoose = require("mongoose"); // assign mongoose variable
 
 const flash = require("connect-flash");
 const session = require("express-session");
-
+const expressLayout = require("express-ejs-layouts");
 // import diff Routes
 const gateRoute = require("./routes/GateRoutes");
 const userRoute = require("./routes/userRoutes");
@@ -45,8 +45,10 @@ app.set("view engine", "ejs");
 // so all files in views will be static now
 app.use("/static",express.static(path.join(__dirname, "/static")));
 
+// app.use(expressLayout);
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+
 
 var sessionStore = new session.MemoryStore;
 

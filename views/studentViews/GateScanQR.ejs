@@ -1,47 +1,18 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>
-    Scan QR From gate
-  </title>
-  <style type="text/css">
-    span
-    {
-      font-size: 20px;
-      color: red;
-    }
-  </style>
-</head>
-<body>
-  <h1> <%= title %> </h1>
-  <% if (expressFlash) { %>
-    <% if(expressFlash.length > 0) { %>
-      <% for(var type in Object.keys(expressFlash)) { %> 
-          <div><span><%= expressFlash[type] %></span></div><br>
-        <% } %> 
-    <% } %>
-  <% } %>
-  
-  <form method="POST" action="/gate/CheckQR">
-    studentId : <input type="number" name="studentId">
-    visitors : <input type="number" name="noOfVisitors" min="0" value="0"><br><br>
-    <button name="in" value="in">IN</button>
-    <button name="out" value="out">OUT</button>
-  </form>
-</body>
-</html> -->
-
-
-
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="ZXing for JS">
 
   <title>DAScanner - ScanQR</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/studentStatic/css/AdminDashboard_css.css"></link>
+  <link rel="stylesheet" type="text/css" href="/static/studentStatic/css/footer.css"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
   <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
@@ -108,6 +79,8 @@
 
 <body>
 
+	<%- include('header'); -%>
+
   <main class="wrapper" style="padding-top:2em">
 
     <section class="container" id="demo-content">
@@ -153,11 +126,9 @@
 
     </section>
 
-    <footer class="footer">
-      <section class="container">
-        <a target="_blank" href="/">Home</a>
-      </section>
-    </footer>
+    
+    <%- include('footer'); -%>
+
   </main>
 
   <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
@@ -399,3 +370,37 @@
 </body>
 
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Scan QR From gate
+  </title>
+  <style type="text/css">
+    span
+    {
+      font-size: 20px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1> <%= title %> </h1>
+  <% if (expressFlash) { %>
+    <% if(expressFlash.length > 0) { %>
+      <% for(var type in Object.keys(expressFlash)) { %> 
+          <div><span><%= expressFlash[type] %></span></div><br>
+        <% } %> 
+    <% } %>
+  <% } %>
+  
+  <form method="POST" action="/gate/CheckQR">
+    studentId : <input type="number" name="studentId">
+    visitors : <input type="number" name="noOfVisitors" min="0" value="0"><br><br>
+    <button name="in" value="in">IN</button>
+    <button name="out" value="out">OUT</button>
+  </form>
+</body>
+</html> -->

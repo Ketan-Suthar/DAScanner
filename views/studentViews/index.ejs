@@ -1,16 +1,30 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 	<title>
 		Scan QR From gate
 	</title>
-</head>
-<body>
-	<h1> <%= title %> </h1>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="ZXing for JS">
 
-	<a href="/users/loadAddUser">Add User</a><br><br>
-	<a href="/userTypes/loadAddUserType">Add User Type</a><br><br>
-	<a href="/gate/loadGateScanner">ScanQR</a><br><br>
-	<a href="/gate/loadGenerateReport">Generate Report</a>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/studentStatic/css/AdminDashboard_css.css"></link>
+	<link rel="stylesheet" type="text/css" href="/static/studentStatic/css/footer.css"></link>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+	<link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
+
+</head>
+	<%- include('header'); -%>
+
+	<centre><h1> <%= title %> </h1></centre>
+
+	<%- include('footer'); -%>
+
 </body>
 </html>

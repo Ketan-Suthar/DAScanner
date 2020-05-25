@@ -1,0 +1,30 @@
+<nav class="n1">
+  <div>
+  <br>
+    <header>
+      <div class="container">
+        <img src="https://www.daiict.ac.in/wp-content/uploads/2019/01/logo-2018.png" class="img1 img-responsive"/>
+      </div>
+    </header>
+
+  </div>
+</nav>
+
+<div class="topnav" id="myTopnav">
+  <a href="/gate/loadGateScanner">Scan QR</a>
+  <a href="/gate/loadGenerateReport">Generate Report</a>
+  <a href="#">LogIn</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+<script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+</script>

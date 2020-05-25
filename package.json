@@ -3,24 +3,20 @@
   "version": "1.0.0",
   "description": "DA Scanner web app for SE  project",
   "main": "DAScanner.js",
-  "scripts":
-  {
+  "scripts": {
     "start": "node DAScanner"
   },
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/Ketan-Suthar/DAScanner.git"
   },
   "author": "ketan suthar",
   "license": "ISC",
-  "bugs":
-  {
+  "bugs": {
     "url": "https://github.com/Ketan-Suthar/DAScanner/issues"
   },
   "homepage": "https://github.com/Ketan-Suthar/DAScanner#readme",
-  "dependencies":
-  {
+  "dependencies": {
     "body-parser": "^1.19.0",
     "clientside-require": "^4.7.2",
     "connect-flash": "^0.1.1",
@@ -28,6 +24,7 @@
     "date-and-time": "^0.13.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
     "express-messages": "^1.0.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",

@@ -7,6 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    
     <title>Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/studentStatic/css/AdminDashboard_css.css"></link>
+    <link rel="stylesheet" type="text/css" href="/static/studentStatic/css/footer.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+    <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
 
     <!-- Icons font CSS-->
     <link href="/static/studentStatic/Report_CSS/material-design-iconic-font.css" rel="stylesheet" media="all">
@@ -27,7 +35,7 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-1">
                 <div>
-                    <img src="/static/studentStatic/images/course-bg-3.jpg" alt="daiict" class="image">
+                    <%- include('header'); -%>
                 </div>
                 <div class="card-body">
                    <h3>Generate Report Of Gate Records</h3></br>
